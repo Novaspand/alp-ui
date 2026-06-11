@@ -25,13 +25,22 @@ Framework-agnostic shadcn/ui component library on Alpine.js + Tailwind CSS. No b
 - [x] Avatar
 - [x] Skeleton
 
-## Phase 2 — Docs Site (CURRENT)
+## Phase 2 — Docs Site (DONE ✓)
 
-## Phase 2 — Docs Site (dogfoods alp-ui)
+- [x] `docs/index.html` — landing + install snippet + component grid + dark mode
+- [x] `docs/themes.html` — live theme switcher demo with cards/badges/input preview
+- [x] `docs/components/index.html` — component listing page
+- [x] `docs/components/button.html` — live preview all variants + sizes + states + snippet
+- [x] `docs/components/badge.html` — live preview all variants + snippet
+- [x] `docs/components/card.html` — live preview + snippet
+- [x] `docs/components/input.html` — states (default, disabled, error) + snippet
+- [x] `docs/components/textarea.html` — states + snippet
+- [x] `docs/components/label.html` — live preview with form pairing + snippet
+- [x] `docs/components/separator.html` — live preview + snippet
+- [x] `docs/components/avatar.html` — image, initials, sizes + snippet
+- [x] `docs/components/skeleton.html` — text line, avatar+text, card skeleton
 
-- [ ] `docs/index.html` — landing + install snippet + quick start
-- [ ] `docs/themes.html` — live theme switcher demo
-- [ ] `docs/components/` — one page per component with live preview + snippet
+## Phase 3 — Simple Alpine Components (CURRENT)
 
 ## Phase 3 — Simple Alpine Components
 

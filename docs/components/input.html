@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ dark: window.matchMedia('(prefers-color-scheme: dark)').matches, sidebarOpen: false }" :class="{ dark: dark }">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Input — alp-ui</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../dist/ui.css" />
+  <script defer src="../../dist/alp-ui.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style> body { display: flex; flex-direction: column; min-height: 100svh; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .no-scrollbar::-webkit-scrollbar { display: none; } </style>
+</head>
+<body class="bg-background text-foreground">
+
+<div data-slot="layout" class="group/layout relative z-10 flex min-h-svh flex-col bg-background">
+
+<header class="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  <div class="mx-auto flex h-14 items-center justify-between border-b border-border px-6">
+    <div class="flex items-center gap-6">
+      <button @click="sidebarOpen = !sidebarOpen" class="inline-flex items-center justify-center rounded-md size-8 lg:hidden hover:bg-accent hover:text-accent-foreground">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
+      <a href="/" class="text-sm font-semibold tracking-tight">alp-ui</a>
+      <nav class="hidden items-center gap-0 lg:flex">
+        <a href="../index.html" class="inline-flex items-center justify-center rounded-md px-2.5 py-1.5 text-sm font-medium hover:bg-accent hover:text-accent-foreground">Home</a>
+        <a href="index.html" class="inline-flex items-center justify-center rounded-md px-2.5 py-1.5 text-sm font-medium bg-accent text-accent-foreground">Components</a>
+        <a href="../themes.html" class="inline-flex items-center justify-center rounded-md px-2.5 py-1.5 text-sm font-medium hover:bg-accent hover:text-accent-foreground">Themes</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="https://github.com/novaspand/alp-ui" class="inline-flex items-center justify-center rounded-md size-8 hover:bg-accent hover:text-accent-foreground">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+      </a>
+      <button @click="dark = !dark" class="inline-flex items-center justify-center rounded-md size-8 hover:bg-accent hover:text-accent-foreground">
+        <svg x-show="!dark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg x-show="dark" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 z-40 bg-black/50 lg:hidden" style="display: none;"></div>
+
+<main class="flex-1">
+<div class="relative flex">
+
+<aside class="fixed inset-y-0 left-0 z-50 w-72 border-r border-border bg-background px-2 pt-14 hidden lg:sticky lg:top-14 lg:z-30 lg:block lg:h-[calc(100vh-3.5rem)] lg:border-r-0 lg:pt-0"
+       :class="{ '!flex': sidebarOpen }"
+       @click.outside="sidebarOpen = false"
+       x-cloak>
+  <div class="no-scrollbar h-full overflow-y-auto px-4">
+    <div class="pt-6">
+      <div class="mb-2 px-2 text-xs font-medium text-muted-foreground">Sections</div>
+      <div class="flex flex-col gap-0.5">
+        <a href="../index.html" class="relative flex h-[30px] w-full items-center rounded-md border border-transparent px-2 text-[0.8rem] font-medium hover:bg-accent">Home</a>
+        <a href="index.html" class="relative flex h-[30px] w-full items-center rounded-md border border-transparent px-2 text-[0.8rem] font-medium hover:bg-accent">Components</a>
+        <a href="../themes.html" class="relative flex h-[30px] w-full items-center rounded-md border border-transparent px-2 text-[0.8rem] font-medium hover:bg-accent">Themes</a>
+      </div>
+    </div>
+    <div class="pt-6">
+      <div class="mb-2 px-2 text-xs font-medium text-muted-foreground">Components</div>
+      <div class="flex flex-col gap-0.5">
+        <a href="button.html" class="relative flex h-[30px] w-fit items-center rounded-md border border-transparent px-2 text-[0.8rem] font-medium hover:bg-accent">Button</a>
+        <a href="badge.html" class="relative flex h-[30px] w-fit items-center rounded-md border border-transparent px-2 text-[0.8rem] font-medium hover:bg-accent">Badge</a>
+        <a href="card.html" class="relative flex h-[30px] w-fit items-center rounded-md border border-transparent px-2 text-[0.8rem] font-medium hover:bg-accent">Card</a>
+        <a href="input.html" class="relative flex h-[30px] w-fit items-center rounded-md border border-accent bg-accent px-2 text-[0.8rem] font-medium">Input</a>
+        <a href="textarea.html" class="relative flex h-[30px] w-fit items-center rounded-md border border-transparent px-2 text-[0.8rem] font-medium hover:bg-accent">Textarea</a>
+        <a href="label.html" class="relative flex h-[30px] w-fit items-center rounded-md border border-transparent px-2 text-[0.8rem] font-medium hover:bg-accent">Label</a>
+        <a href="separator.html" class="relative flex h-[30px] w-fit items-center rounded-md border border-transparent px-2 text-[0.8rem] font-medium hover:bg-accent">Separator</a>
+        <a href="avatar.html" class="relative flex h-[30px] w-fit items-center rounded-md border border-transparent px-2 text-[0.8rem] font-medium hover:bg-accent">Avatar</a>
+        <a href="skeleton.html" class="relative flex h-[30px] w-fit items-center rounded-md border border-transparent px-2 text-[0.8rem] font-medium hover:bg-accent">Skeleton</a>
+      </div>
+    </div>
+    <div class="pt-6">
+      <div class="mb-2 px-2 text-xs font-medium text-muted-foreground">Coming Soon</div>
+      <div class="flex flex-col gap-0.5">
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Alert</span>
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Collapsible</span>
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Accordion</span>
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Tabs</span>
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Dialog</span>
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Dropdown</span>
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Tooltip</span>
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Popover</span>
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Select</span>
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Switch</span>
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Checkbox</span>
+        <span class="relative flex h-[30px] w-fit items-center rounded-md px-2 text-[0.8rem] font-medium text-muted-foreground">Progress</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div data-slot="docs" class="flex-1 scroll-mt-24 px-4 pt-6 pb-16 sm:px-6 lg:pt-8">
+  <div class="mx-auto max-w-160">
+
+    <div>
+      <h1 class="scroll-m-24 text-3xl font-semibold tracking-tight">Input</h1>
+      <p class="mt-2 text-base text-muted-foreground sm:text-balance md:max-w-[80%]">A text input field with focus ring and disabled state.</p>
+    </div>
+
+    <div data-slot="component-preview" class="group relative mt-8 mb-12 flex flex-col overflow-hidden rounded-xl border">
+      <div class="flex min-h-32 items-center justify-center p-10">
+        <div class="flex flex-col gap-4 w-80">
+          <input type="email" placeholder="Email" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+          <input type="email" placeholder="Disabled" disabled class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+          <div class="relative">
+            <input type="email" placeholder="With icon" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-9" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="mb-4 mt-10 scroll-m-24 text-lg font-semibold tracking-tight">Usage</h2>
+    <div class="relative group mb-8">
+      <button x-data="{ copied: false }" @click="const t = ($el.parentElement.querySelector('code') || $el.parentElement.querySelector('pre'))?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+        <span x-show="!copied">Copy</span>
+        <span x-show="copied" x-cloak>Copied!</span>
+      </button>
+      <pre class="overflow-x-auto rounded-lg border border-border bg-muted p-4 pb-8 text-sm"><code>&lt;input type="email" placeholder="Email" x-data="input()" x-bind="inputAttrs" /&gt;
+
+<span class="text-muted-foreground">&lt;!-- Disabled --&gt;</span>
+&lt;input type="email" placeholder="Email" x-data="input({ state: 'disabled' })" x-bind="inputAttrs" /&gt;</code></pre>
+    </div>
+
+  </div>
+</div>
+
+</div>
+</main>
+
+<footer class="border-t border-border">
+  <div class="flex h-14 items-center justify-center px-6 text-center text-xs text-muted-foreground sm:text-sm">
+    Built by <a href="https://novaspand.com" class="ml-1 font-medium underline underline-offset-4">Novaspand</a>. The source code is available on <a href="https://github.com/novaspand/alp-ui" class="ml-1 font-medium underline underline-offset-4">GitHub</a>.
+  </div>
+</footer>
+
+</div>
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   "private": true,
   "description": "Framework-agnostic shadcn/ui component library built on Alpine.js and Tailwind CSS",
   "scripts": {
-    "build": "npx tailwindcss -i ./src/input.css -o ./dist/ui.css --minify && cp -r src/themes/. dist/themes/",
+    "build": "npx tailwindcss -i ./src/input.css -o ./dist/ui.css --minify && cp -r src/themes/. dist/themes/ && cp src/alp-ui.js dist/alp-ui.js",
     "dev": "npx tailwindcss -i ./src/input.css -o ./dist/ui.css --watch",
     "prebuild": "mkdir -p dist"
   },
