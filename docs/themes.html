@@ -7,9 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../dist/ui.css" />
+    <link rel="stylesheet" href="dist/ui.css" />
   <link rel="stylesheet" id="theme-stylesheet" href="" />
-  <script defer src="../dist/alp-ui.js"></script>
+  <script defer src="dist/alp-ui.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style> body { display: flex; flex-direction: column; min-height: 100svh; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .no-scrollbar::-webkit-scrollbar { display: none; } </style>
 </head>
@@ -73,7 +73,7 @@
 
     <div class="mt-8 mb-12 flex flex-wrap gap-2">
       <template x-for="t in ['zinc', 'rose', 'blue', 'green', 'orange']" :key="t">
-        <button @click="theme = t; document.getElementById('theme-stylesheet').href = theme === 'zinc' ? '' : `../dist/themes/${theme}.css`" :class="theme === t ? 'bg-primary text-primary-foreground shadow-xs' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2" x-text="t.charAt(0).toUpperCase() + t.slice(1)"></button>
+        <button @click="theme = t; document.getElementById('theme-stylesheet').href = theme === 'zinc' ? '' : `dist/themes/${theme}.css`" :class="theme === t ? 'bg-primary text-primary-foreground shadow-xs' : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2" x-text="t.charAt(0).toUpperCase() + t.slice(1)"></button>
       </template>
     </div>
 
