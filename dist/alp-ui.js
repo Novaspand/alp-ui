@@ -123,7 +123,7 @@ document.addEventListener('alpine:init', () => {
     extraClass: opts.class || '',
 
     get inputAttrs() {
-      const base = 'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
+      const base = 'h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dark:bg-input/30 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40'
 
       return {
         class: [base, this.extraClass].filter(Boolean).join(' '),
@@ -138,7 +138,7 @@ document.addEventListener('alpine:init', () => {
     extraClass: opts.class || '',
 
     get textareaAttrs() {
-      const base = 'flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
+      const base = 'flex min-h-20 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dark:bg-input/30 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40'
 
       return {
         class: [base, this.extraClass].filter(Boolean).join(' '),
@@ -152,7 +152,44 @@ document.addEventListener('alpine:init', () => {
     extraClass: opts.class || '',
 
     get labelAttrs() {
-      const base = 'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+      const base = 'text-sm leading-none font-medium select-none group-data-[disabled=true]/field:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+
+      return {
+        class: [base, this.extraClass].filter(Boolean).join(' '),
+      }
+    },
+  }))
+
+  // ── Field ────────────────────────────────────────────────────────────
+  Alpine.data('field', (opts = {}) => ({
+    invalid: opts.invalid || false,
+    disabled: opts.disabled || false,
+    extraClass: opts.class || '',
+
+    get fieldAttrs() {
+      const base = 'group/field flex w-full flex-col gap-3'
+
+      return {
+        class: [base, this.extraClass].filter(Boolean).join(' '),
+        'data-invalid': this.invalid ? true : undefined,
+        'data-disabled': this.disabled ? true : undefined,
+      }
+    },
+  }))
+
+  Alpine.data('fieldContent', () => ({
+    get fieldContentAttrs() {
+      return {
+        class: 'group/field-content flex flex-1 flex-col gap-1.5 leading-snug',
+      }
+    },
+  }))
+
+  Alpine.data('fieldDescription', (opts = {}) => ({
+    extraClass: opts.class || '',
+
+    get fieldDescriptionAttrs() {
+      const base = 'text-sm leading-normal font-normal text-muted-foreground'
 
       return {
         class: [base, this.extraClass].filter(Boolean).join(' '),

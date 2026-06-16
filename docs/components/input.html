@@ -102,14 +102,33 @@
       <p class="mt-2 text-base text-muted-foreground sm:text-balance md:max-w-[80%]">A text input field with focus ring and disabled state.</p>
     </div>
 
-    <div data-slot="component-preview" class="group relative mt-8 mb-12 flex flex-col overflow-hidden rounded-xl border">
-      <div class="flex min-h-32 items-center justify-center p-10">
-        <div class="flex flex-col gap-4 w-80">
-          <input type="email" placeholder="Email" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
-          <input type="email" placeholder="Disabled" disabled class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
-          <div class="relative">
-            <input type="email" placeholder="With icon" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-9" />
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    <div x-data="{ showCode: false }" class="mb-12">
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <input x-data="input()" x-bind="inputAttrs" type="email" placeholder="Email" />
+            <input x-data="input({ state: 'disabled' })" x-bind="inputAttrs" type="email" placeholder="Disabled" disabled />
+            <div class="relative">
+              <input x-data="input({ class: 'pl-9' })" x-bind="inputAttrs" type="email" placeholder="With icon" />
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;input x-data="input()" x-bind="inputAttrs" type="email" placeholder="Email" /&gt;
+&lt;input x-data="input({ state: 'disabled' })" x-bind="inputAttrs" type="email" disabled /&gt;
+&lt;input x-data="input({ class: 'pl-9' })" x-bind="inputAttrs" type="email" placeholder="With icon" /&gt;</code></pre>
           </div>
         </div>
       </div>
@@ -121,10 +140,115 @@
         <span x-show="!copied">Copy</span>
         <span x-show="copied" x-cloak>Copied!</span>
       </button>
-      <pre class="overflow-x-auto rounded-lg border border-border bg-muted p-4 pb-8 text-sm"><code>&lt;input type="email" placeholder="Email" x-data="input()" x-bind="inputAttrs" /&gt;
+      <pre class="overflow-x-auto rounded-lg border border-border bg-muted p-4 pb-8 text-sm"><code><span class="text-muted-foreground">&lt;!-- Basic input --&gt;</span>
+&lt;input x-data="input()" x-bind="inputAttrs" type="email" placeholder="Email" /&gt;
 
-<span class="text-muted-foreground">&lt;!-- Disabled --&gt;</span>
-&lt;input type="email" placeholder="Email" x-data="input({ state: 'disabled' })" x-bind="inputAttrs" /&gt;</code></pre>
+<span class="text-muted-foreground">&lt;!-- Input with label and description (using Field) --&gt;</span>
+&lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Email&lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="email" placeholder="you@example.com" /&gt;
+    &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs"&gt;We'll never share your email.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+<span class="text-muted-foreground">&lt;!-- Invalid input --&gt;</span>
+&lt;div x-data="field({ invalid: true })" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Email&lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="email" value="invalid" aria-invalid="true" /&gt;
+    &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs" class="text-destructive"&gt;Please enter a valid email.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <h2 class="mb-4 mt-10 scroll-m-24 text-lg font-semibold tracking-tight">Examples</h2>
+
+    <!-- Field with label and description -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Field</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">field()</code>, <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">fieldContent()</code>, and <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">fieldDescription()</code> to build inputs with labels and helper text.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-6">
+            <div x-data="field()" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Username</label>
+              <div x-data="fieldContent()" x-bind="fieldContentAttrs">
+                <input x-data="input()" x-bind="inputAttrs" type="text" placeholder="Choose a username" />
+                <p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs">Choose a unique username for your account.</p>
+              </div>
+            </div>
+            <div x-data="field()" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Email</label>
+              <div x-data="fieldContent()" x-bind="fieldContentAttrs">
+                <input x-data="input()" x-bind="inputAttrs" type="email" placeholder="you@example.com" />
+                <p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs">We'll send updates to this address.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Username&lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="text" placeholder="Choose a username" /&gt;
+    &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs"&gt;Choose a unique username.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invalid -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Invalid</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">invalid: true</code> on the field and <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">aria-invalid="true"</code> on the input to show validation errors.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-6">
+            <div x-data="field({ invalid: true })" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Invalid Input</label>
+              <div x-data="fieldContent()" x-bind="fieldContentAttrs">
+                <input x-data="input()" x-bind="inputAttrs" type="text" value="bad data" aria-invalid="true" />
+                <p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs" class="text-destructive">This field contains validation errors.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="field({ invalid: true })" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Invalid Input&lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="text" value="bad data" aria-invalid="true" /&gt;
+    &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs" class="text-destructive"&gt;This field contains validation errors.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
