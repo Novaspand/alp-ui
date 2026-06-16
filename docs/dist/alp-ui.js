@@ -64,7 +64,7 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('card', () => ({
     get cardAttrs() {
       return {
-        class: 'flex flex-col gap-(--card-spacing) rounded-xl border bg-card py-(--card-spacing) text-card-foreground shadow-sm [--card-spacing:--spacing(6)]',
+        class: 'flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl border bg-card py-(--card-spacing) text-card-foreground shadow-sm [--card-spacing:--spacing(6)] has-[>img:first-child]:pt-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl',
       }
     },
   }))
