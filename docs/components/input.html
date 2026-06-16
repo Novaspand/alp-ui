@@ -159,6 +159,29 @@
     &lt;input x-data="input()" x-bind="inputAttrs" type="email" value="invalid" aria-invalid="true" /&gt;
     &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs" class="text-destructive"&gt;Please enter a valid email.&lt;/p&gt;
   &lt;/div&gt;
+&lt;/div&gt;
+
+<span class="text-muted-foreground">&lt;!-- Input Group (prefix/suffix) --&gt;</span>
+&lt;div x-data="inputGroup()" x-bind="inputGroupAttrs"&gt;
+  &lt;div x-data="inputGroupAddon({ align: 'inline-start' })" x-bind="inputGroupAddonAttrs"&gt;
+    &lt;svg&gt;...&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;input x-data="inputGroupInput()" x-bind="inputGroupInputAttrs" type="url" placeholder="Website" /&gt;
+  &lt;div x-data="inputGroupAddon({ align: 'inline-end' })" x-bind="inputGroupAddonAttrs"&gt;
+    &lt;span&gt;https://&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+<span class="text-muted-foreground">&lt;!-- Field Group (grid layout) --&gt;</span>
+&lt;div x-data="fieldGroup()" x-bind="fieldGroupAttrs"&gt;
+  &lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+    &lt;label x-data="label()" x-bind="labelAttrs"&gt;First Name&lt;/label&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="text" /&gt;
+  &lt;/div&gt;
+  &lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+    &lt;label x-data="label()" x-bind="labelAttrs"&gt;Last Name&lt;/label&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="text" /&gt;
+  &lt;/div&gt;
 &lt;/div&gt;</code></pre>
     </div>
 
@@ -245,6 +268,420 @@
     &lt;input x-data="input()" x-bind="inputAttrs" type="text" value="bad data" aria-invalid="true" /&gt;
     &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs" class="text-destructive"&gt;This field contains validation errors.&lt;/p&gt;
   &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- File -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">File</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">type="file"</code> to create a file input.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <div x-data="field()" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Picture</label>
+              <div x-data="fieldContent()" x-bind="fieldContentAttrs">
+                <input x-data="input()" x-bind="inputAttrs" type="file" />
+                <p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs">Select a picture to upload.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Picture&lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="file" /&gt;
+    &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs"&gt;Select a picture to upload.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inline -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Inline</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">orientation="horizontal"</code> on a <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">field</code> to create an inline input paired with a button.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <div x-data="field({ class: 'flex-row items-end gap-3' })" x-bind="fieldAttrs">
+              <div x-data="fieldContent()" x-bind="fieldContentAttrs">
+                <label x-data="label()" x-bind="labelAttrs">Search</label>
+                <input x-data="input()" x-bind="inputAttrs" type="search" placeholder="Search..." />
+              </div>
+              <button x-data="button({ variant: 'default' })" x-bind="buttonAttrs">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="field({ class: 'flex-row items-end gap-3' })" x-bind="fieldAttrs"&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;label x-data="label()" x-bind="labelAttrs"&gt;Search&lt;/label&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="search" placeholder="Search..." /&gt;
+  &lt;/div&gt;
+  &lt;button x-data="button({ variant: 'default' })" x-bind="buttonAttrs"&gt;
+    &lt;svg ...&gt;...&lt;/svg&gt;
+    Search
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Grid</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">fieldGroup</code> to place multiple fields side by side.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <div x-data="fieldGroup()" x-bind="fieldGroupAttrs">
+              <div x-data="field()" x-bind="fieldAttrs">
+                <label x-data="label()" x-bind="labelAttrs">First Name</label>
+                <input x-data="input()" x-bind="inputAttrs" type="text" placeholder="John" />
+              </div>
+              <div x-data="field()" x-bind="fieldAttrs">
+                <label x-data="label()" x-bind="labelAttrs">Last Name</label>
+                <input x-data="input()" x-bind="inputAttrs" type="text" placeholder="Doe" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="fieldGroup()" x-bind="fieldGroupAttrs"&gt;
+  &lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+    &lt;label x-data="label()" x-bind="labelAttrs"&gt;First Name&lt;/label&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="text" placeholder="John" /&gt;
+  &lt;/div&gt;
+  &lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+    &lt;label x-data="label()" x-bind="labelAttrs"&gt;Last Name&lt;/label&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="text" placeholder="Doe" /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Required -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Required</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use the <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">required</code> attribute and add a visual indicator to the label.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <div x-data="field()" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Required Field <span class="text-destructive">*</span></label>
+              <div x-data="fieldContent()" x-bind="fieldContentAttrs">
+                <input x-data="input()" x-bind="inputAttrs" type="text" placeholder="Type something..." required />
+                <p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs">This field must be filled out.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Required Field &lt;span class="text-destructive"&gt;*&lt;/span&gt;&lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="text" placeholder="Type something..." required /&gt;
+    &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs"&gt;This field must be filled out.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Badge -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Badge</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Add a <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">badge</code> inside the label to highlight a recommended field.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <div x-data="field()" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">
+                Webhook URL
+                <span x-data="badge({ variant: 'secondary' })" x-bind="badgeAttrs">Beta</span>
+              </label>
+              <div x-data="fieldContent()" x-bind="fieldContentAttrs">
+                <input x-data="input()" x-bind="inputAttrs" type="url" placeholder="https://example.com/webhook" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;
+    Webhook URL
+    &lt;span x-data="badge({ variant: 'secondary' })" x-bind="badgeAttrs"&gt;Beta&lt;/span&gt;
+  &lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="url" placeholder="https://example.com/webhook" /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Group -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Input Group</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">inputGroup</code> and <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">inputGroupAddon</code> to add icons, text, or buttons inside an input.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <div x-data="inputGroup()" x-bind="inputGroupAttrs">
+              <div x-data="inputGroupAddon({ align: 'inline-start' })" x-bind="inputGroupAddonAttrs">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              </div>
+              <input x-data="inputGroupInput()" x-bind="inputGroupInputAttrs" type="url" placeholder="Website URL" />
+              <div x-data="inputGroupAddon({ align: 'inline-end' })" x-bind="inputGroupAddonAttrs">
+                <span>https://</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="inputGroup()" x-bind="inputGroupAttrs"&gt;
+  &lt;div x-data="inputGroupAddon({ align: 'inline-start' })" x-bind="inputGroupAddonAttrs"&gt;
+    &lt;svg&gt;...&lt;/svg&gt;
+  &lt;/div&gt;
+  &lt;input x-data="inputGroupInput()" x-bind="inputGroupInputAttrs" type="url" placeholder="Website URL" /&gt;
+  &lt;div x-data="inputGroupAddon({ align: 'inline-end' })" x-bind="inputGroupAddonAttrs"&gt;
+    &lt;span&gt;https://&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button Group -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Button Group</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">buttonGroup</code> to attach buttons to an input.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <div x-data="inputGroup()" x-bind="inputGroupAttrs">
+              <input x-data="inputGroupInput()" x-bind="inputGroupInputAttrs" type="search" placeholder="Search..." />
+              <div x-data="inputGroupAddon({ align: 'inline-end' })" x-bind="inputGroupAddonAttrs" class="p-0! [&>button]:my-1">
+                <button x-data="button({ variant: 'ghost', size: 'icon-sm' })" x-bind="buttonAttrs" class="rounded-[calc(var(--radius)-5px)]!">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="inputGroup()" x-bind="inputGroupAttrs"&gt;
+  &lt;input x-data="inputGroupInput()" x-bind="inputGroupInputAttrs" type="search" placeholder="Search..." /&gt;
+  &lt;div x-data="inputGroupAddon({ align: 'inline-end' })" x-bind="inputGroupAddonAttrs" class="p-0! [&amp;&gt;button]:my-1"&gt;
+    &lt;button x-data="button({ variant: 'ghost', size: 'icon-sm' })" x-bind="buttonAttrs" class="rounded-[calc(var(--radius)-5px)]!"&gt;
+      &lt;svg&gt;...&lt;/svg&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Form</h3>
+      <p class="mb-4 text-sm text-muted-foreground">A complete form combining multiple input types.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-6">
+            <div x-data="fieldGroup()" x-bind="fieldGroupAttrs">
+              <div x-data="field()" x-bind="fieldAttrs">
+                <label x-data="label()" x-bind="labelAttrs">Name</label>
+                <input x-data="input()" x-bind="inputAttrs" type="text" placeholder="Your name" />
+              </div>
+              <div x-data="field()" x-bind="fieldAttrs">
+                <label x-data="label()" x-bind="labelAttrs">Email</label>
+                <input x-data="input()" x-bind="inputAttrs" type="email" placeholder="you@example.com" />
+              </div>
+            </div>
+            <div x-data="field()" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Email</label>
+              <div x-data="fieldContent()" x-bind="fieldContentAttrs">
+                <input x-data="input()" x-bind="inputAttrs" type="email" placeholder="you@example.com" />
+                <p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs">We'll never share your email with anyone.</p>
+              </div>
+            </div>
+            <div x-data="field()" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Phone</label>
+              <input x-data="input()" x-bind="inputAttrs" type="tel" placeholder="+1 (555) 000-0000" />
+            </div>
+            <div x-data="field()" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Country</label>
+              <select class="flex h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:bg-input/30">
+                <option>United States</option>
+                <option>Canada</option>
+                <option>Mexico</option>
+              </select>
+            </div>
+            <div x-data="fieldGroup()" x-bind="fieldGroupAttrs">
+              <div x-data="field()" x-bind="fieldAttrs">
+                <label x-data="label()" x-bind="labelAttrs">Address</label>
+                <input x-data="input()" x-bind="inputAttrs" type="text" placeholder="Street" />
+              </div>
+              <div x-data="field()" x-bind="fieldAttrs">
+                <label x-data="label()" x-bind="labelAttrs" class="opacity-0 hidden sm:block">Zip</label>
+                <input x-data="input()" x-bind="inputAttrs" type="text" placeholder="ZIP" />
+              </div>
+            </div>
+            <div class="flex justify-end gap-2">
+              <button x-data="button({ variant: 'outline' })" x-bind="buttonAttrs">Cancel</button>
+              <button x-data="button({ variant: 'default' })" x-bind="buttonAttrs">Submit</button>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="fieldGroup()" x-bind="fieldGroupAttrs"&gt;
+  &lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+    &lt;label x-data="label()" x-bind="labelAttrs"&gt;Name&lt;/label&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="text" placeholder="Your name" /&gt;
+  &lt;/div&gt;
+  &lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+    &lt;label x-data="label()" x-bind="labelAttrs"&gt;Email&lt;/label&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="email" placeholder="you@example.com" /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Email&lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="email" placeholder="you@example.com" /&gt;
+    &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs"&gt;We'll never share your email.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Phone&lt;/label&gt;
+  &lt;input x-data="input()" x-bind="inputAttrs" type="tel" placeholder="+1 (555) 000-0000" /&gt;
+&lt;/div&gt;
+&lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Country&lt;/label&gt;
+  &lt;select class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs md:text-sm focus-visible:border-ring focus-visible:ring-[3px] dark:bg-input/30"&gt;
+    &lt;option&gt;United States&lt;/option&gt;
+    &lt;option&gt;Canada&lt;/option&gt;
+    &lt;option&gt;Mexico&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+&lt;div x-data="fieldGroup()" x-bind="fieldGroupAttrs"&gt;
+  &lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+    &lt;label x-data="label()" x-bind="labelAttrs"&gt;Address&lt;/label&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="text" placeholder="Street" /&gt;
+  &lt;/div&gt;
+  &lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+    &lt;label x-data="label()" x-bind="labelAttrs"&gt;Zip&lt;/label&gt;
+    &lt;input x-data="input()" x-bind="inputAttrs" type="text" placeholder="ZIP" /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="flex justify-end gap-2"&gt;
+  &lt;button x-data="button({ variant: 'outline' })" x-bind="buttonAttrs"&gt;Cancel&lt;/button&gt;
+  &lt;button x-data="button({ variant: 'default' })" x-bind="buttonAttrs"&gt;Submit&lt;/button&gt;
 &lt;/div&gt;</code></pre>
           </div>
         </div>

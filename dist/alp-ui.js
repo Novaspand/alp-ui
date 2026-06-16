@@ -197,6 +197,85 @@ document.addEventListener('alpine:init', () => {
     },
   }))
 
+  // ── Field Group ──────────────────────────────────────────────────────
+  Alpine.data('fieldGroup', (opts = {}) => ({
+    cols: opts.cols || 2,
+    extraClass: opts.class || '',
+
+    get fieldGroupAttrs() {
+      const grids = { 2: 'grid-cols-2', 3: 'grid-cols-3', 4: 'grid-cols-4' }
+      return {
+        class: ['grid gap-4', grids[this.cols] || grids[2], this.extraClass].filter(Boolean).join(' '),
+      }
+    },
+  }))
+
+  // ── Input Group ──────────────────────────────────────────────────────
+  Alpine.data('inputGroup', (opts = {}) => ({
+    disabled: opts.disabled || false,
+    extraClass: opts.class || '',
+
+    get inputGroupAttrs() {
+      const base = 'group/input-group relative flex w-full items-center rounded-md border border-input shadow-xs transition-[color,box-shadow] outline-none dark:bg-input/30 has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:ring-[3px] has-[[data-slot=input-group-control]:focus-visible]:ring-ring/50 has-[[data-slot][aria-invalid=true]]:border-destructive has-[[data-slot][aria-invalid=true]]:ring-destructive/20 dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40'
+
+      return {
+        class: [base, this.extraClass].filter(Boolean).join(' '),
+        role: 'group',
+        'data-disabled': this.disabled ? true : undefined,
+      }
+    },
+  }))
+
+  Alpine.data('inputGroupAddon', (opts = {}) => ({
+    align: opts.align || 'inline-start',
+    extraClass: opts.class || '',
+
+    get inputGroupAddonAttrs() {
+      const base = 'flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-muted-foreground select-none group-data-[disabled=true]/input-group:opacity-50 [&>svg:not([class*="size-"])]:size-4'
+      const aligns = {
+        'inline-start': 'order-first pl-3',
+        'inline-end': 'order-last pr-3',
+      }
+
+      return {
+        class: [base, aligns[this.align] || aligns['inline-start'], this.extraClass].filter(Boolean).join(' '),
+        role: 'group',
+        'data-align': this.align,
+      }
+    },
+  }))
+
+  Alpine.data('inputGroupInput', (opts = {}) => ({
+    extraClass: opts.class || '',
+
+    get inputGroupInputAttrs() {
+      const base = 'h-9 w-full min-w-0 flex-1 rounded-none border-0 bg-transparent px-3 py-1 text-base shadow-none outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:ring-0 dark:bg-transparent'
+
+      return {
+        class: [base, this.extraClass].filter(Boolean).join(' '),
+        'data-slot': 'input-group-control',
+      }
+    },
+  }))
+
+  // ── Button Group ─────────────────────────────────────────────────────
+  Alpine.data('buttonGroup', (opts = {}) => ({
+    orientation: opts.orientation || 'horizontal',
+    extraClass: opts.class || '',
+
+    get buttonGroupAttrs() {
+      const base = 'flex w-fit items-stretch [&>*]:focus-visible:relative [&>*]:focus-visible:z-10'
+      const orient = this.orientation === 'vertical'
+        ? 'flex-col [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child)]:border-t-0 [&>*:not(:last-child)]:rounded-b-none'
+        : '[&>*:not(:first-child)]:rounded-l-none [&>*:not(:first-child)]:border-l-0 [&>*:not(:last-child)]:rounded-r-none'
+
+      return {
+        class: [base, orient, this.extraClass].filter(Boolean).join(' '),
+        role: 'group',
+      }
+    },
+  }))
+
   // ── Separator ───────────────────────────────────────────────────────
   Alpine.data('separator', (opts = {}) => ({
     orientation: opts.orientation || 'horizontal',
