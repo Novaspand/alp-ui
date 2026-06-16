@@ -122,7 +122,7 @@
       <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Default</h3>
       <div class="group relative flex flex-col overflow-hidden rounded-xl border">
         <div class="flex min-h-32 items-center justify-center p-10">
-          <span class="inline-flex items-center rounded-md border border-border bg-primary px-2.5 py-0.5 text-xs font-semibold text-primary-foreground shadow-xs">Badge</span>
+          <span x-data="badge()" x-bind="badgeAttrs">Badge</span>
         </div>
         <div class="flex items-center border-t border-border px-4 py-2">
           <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
@@ -147,7 +147,7 @@
       <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Secondary</h3>
       <div class="group relative flex flex-col overflow-hidden rounded-xl border">
         <div class="flex min-h-32 items-center justify-center p-10">
-          <span class="inline-flex items-center rounded-md border border-border bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">Secondary</span>
+          <span x-data="badge({ variant: 'secondary' })" x-bind="badgeAttrs">Secondary</span>
         </div>
         <div class="flex items-center border-t border-border px-4 py-2">
           <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
@@ -172,7 +172,7 @@
       <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Destructive</h3>
       <div class="group relative flex flex-col overflow-hidden rounded-xl border">
         <div class="flex min-h-32 items-center justify-center p-10">
-          <span class="inline-flex items-center rounded-md border border-border bg-destructive px-2.5 py-0.5 text-xs font-semibold text-destructive-foreground shadow-xs">Destructive</span>
+          <span x-data="badge({ variant: 'destructive' })" x-bind="badgeAttrs">Destructive</span>
         </div>
         <div class="flex items-center border-t border-border px-4 py-2">
           <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
@@ -197,7 +197,7 @@
       <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Outline</h3>
       <div class="group relative flex flex-col overflow-hidden rounded-xl border">
         <div class="flex min-h-32 items-center justify-center p-10">
-          <span class="inline-flex items-center rounded-md border border-input px-2.5 py-0.5 text-xs font-semibold text-foreground">Outline</span>
+          <span x-data="badge({ variant: 'outline' })" x-bind="badgeAttrs">Outline</span>
         </div>
         <div class="flex items-center border-t border-border px-4 py-2">
           <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
@@ -212,6 +212,136 @@
               <span x-show="copied" x-cloak>Copied!</span>
             </button>
             <pre class="overflow-x-auto text-xs"><code>&lt;span x-data="badge({ variant: 'outline' })" x-bind="badgeAttrs"&gt;Outline&lt;/span&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ghost -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Ghost</h3>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <span x-data="badge({ variant: 'ghost' })" x-bind="badgeAttrs">Ghost</span>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;span x-data="badge({ variant: 'ghost' })" x-bind="badgeAttrs"&gt;Ghost&lt;/span&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- With Icon -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">With Icon</h3>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center gap-4 p-10">
+          <span x-data="badge()" x-bind="badgeAttrs">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Verified
+          </span>
+          <span x-data="badge({ variant: 'secondary' })" x-bind="badgeAttrs">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            Bookmark
+          </span>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;span x-data="badge()" x-bind="badgeAttrs"&gt;
+  &lt;svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/&gt;&lt;polyline points="22 4 12 14.01 9 11.01"/&gt;&lt;/svg&gt;
+  Verified
+&lt;/span&gt;
+&lt;span x-data="badge({ variant: 'secondary' })" x-bind="badgeAttrs"&gt;
+  &lt;svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/&gt;&lt;/svg&gt;
+  Bookmark
+&lt;/span&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Link -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Link</h3>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <a href="#" class="no-underline">
+            <span x-data="badge({ variant: 'outline' })" x-bind="badgeAttrs">
+              Open Link
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+            </span>
+          </a>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;a href="#" class="no-underline"&gt;
+  &lt;span x-data="badge({ variant: 'outline' })" x-bind="badgeAttrs"&gt;
+    Open Link
+    &lt;svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M7 7h10v10"/&gt;&lt;path d="M7 17 17 7"/&gt;&lt;/svg&gt;
+  &lt;/span&gt;
+&lt;/a&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Colors -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Custom Colors</h3>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center gap-4 p-10">
+          <span x-data="badge({ class: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20' })" x-bind="badgeAttrs">Blue</span>
+          <span x-data="badge({ class: 'bg-green-500/10 text-green-600 dark:text-green-400 hover:bg-green-500/20' })" x-bind="badgeAttrs">Green</span>
+          <span x-data="badge({ class: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 hover:bg-purple-500/20' })" x-bind="badgeAttrs">Purple</span>
+          <span x-data="badge({ class: 'bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-500/20' })" x-bind="badgeAttrs">Red</span>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;span x-data="badge({ class: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20' })" x-bind="badgeAttrs"&gt;Blue&lt;/span&gt;
+&lt;span x-data="badge({ class: 'bg-green-500/10 text-green-600 dark:text-green-400 hover:bg-green-500/20' })" x-bind="badgeAttrs"&gt;Green&lt;/span&gt;
+&lt;span x-data="badge({ class: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 hover:bg-purple-500/20' })" x-bind="badgeAttrs"&gt;Purple&lt;/span&gt;
+&lt;span x-data="badge({ class: 'bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-500/20' })" x-bind="badgeAttrs"&gt;Red&lt;/span&gt;</code></pre>
           </div>
         </div>
       </div>
