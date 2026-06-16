@@ -166,16 +166,16 @@
 
     <div x-data="{ showCode: false }" class="mb-8">
       <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Size</h3>
-      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">data-size="sm"</code> for a smaller, more compact card. Note: the `size` prop on the Alpine card component is coming soon — for now add the attribute directly.</p>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">[--card-spacing:--spacing(3)]</code> for a smaller, more compact card.</p>
       <div class="group relative flex flex-col overflow-hidden rounded-xl border">
         <div class="flex min-h-32 items-center justify-center p-10">
-          <div x-data="card()" x-bind="cardAttrs" data-size="sm" class="w-72 [--card-spacing:--spacing(3)]">
+          <div x-data="card()" x-bind="cardAttrs" class="w-72 [--card-spacing:--spacing(3)]">
             <div x-data="cardHeader()" x-bind="cardHeaderAttrs">
               <div x-data="cardTitle()" x-bind="cardTitleAttrs">Small Card</div>
               <div x-data="cardDescription()" x-bind="cardDescriptionAttrs">This card uses the small size variant.</div>
             </div>
             <div x-data="cardContent()" x-bind="cardContentAttrs">
-              <p class="text-sm text-muted-foreground">The card component supports a <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">data-size="sm"</code> attribute for a more compact appearance.</p>
+              <p class="text-sm text-muted-foreground">Override <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">--card-spacing</code> for a more compact appearance.</p>
             </div>
             <div x-data="cardFooter()" x-bind="cardFooterAttrs">
               <button x-data="button({ size: 'sm' })" x-bind="buttonAttrs">Action</button>
@@ -194,7 +194,8 @@
               <span x-show="!copied">Copy</span>
               <span x-show="copied" x-cloak>Copied!</span>
             </button>
-            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="card()" x-bind="cardAttrs" data-size="sm" class="[--card-spacing:--spacing(3)]"&gt;
+            <pre class="overflow-x-auto text-xs"><code><span class="text-muted-foreground">&lt;!-- Override --card-spacing for tighter spacing --&gt;</span>
+&lt;div x-data="card()" x-bind="cardAttrs" class="[--card-spacing:--spacing(3)]"&gt;
   &lt;div x-data="cardHeader()" x-bind="cardHeaderAttrs"&gt;
     &lt;div x-data="cardTitle()" x-bind="cardTitleAttrs"&gt;Small Card&lt;/div&gt;
     &lt;div x-data="cardDescription()" x-bind="cardDescriptionAttrs"&gt;This card uses the small size variant.&lt;/div&gt;
@@ -206,6 +207,59 @@
     &lt;button x-data="button({ size: 'sm' })" x-bind="buttonAttrs"&gt;Action&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Spacing</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Control padding and gap via the <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">--card-spacing</code> CSS variable on the card root. Default is <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">6</code> (24px).</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex flex-wrap items-start gap-6">
+            <div x-data="card()" x-bind="cardAttrs" class="w-48 [--card-spacing:--spacing(3)]">
+              <div x-data="cardHeader()" x-bind="cardHeaderAttrs">
+                <div x-data="cardTitle()" x-bind="cardTitleAttrs" class="text-sm">Tight</div>
+              </div>
+              <div x-data="cardContent()" x-bind="cardContentAttrs">
+                <p class="text-xs text-muted-foreground">--spacing(3)</p>
+              </div>
+            </div>
+            <div x-data="card()" x-bind="cardAttrs" class="w-48">
+              <div x-data="cardHeader()" x-bind="cardHeaderAttrs">
+                <div x-data="cardTitle()" x-bind="cardTitleAttrs" class="text-sm">Default</div>
+              </div>
+              <div x-data="cardContent()" x-bind="cardContentAttrs">
+                <p class="text-xs text-muted-foreground">--spacing(6)</p>
+              </div>
+            </div>
+            <div x-data="card()" x-bind="cardAttrs" class="w-48 [--card-spacing:--spacing(10)]">
+              <div x-data="cardHeader()" x-bind="cardHeaderAttrs">
+                <div x-data="cardTitle()" x-bind="cardTitleAttrs" class="text-sm">Loose</div>
+              </div>
+              <div x-data="cardContent()" x-bind="cardContentAttrs">
+                <p class="text-xs text-muted-foreground">--spacing(10)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code><span class="text-muted-foreground">&lt;!-- Override --card-spacing on the card root --&gt;</span>
+&lt;div x-data="card()" x-bind="cardAttrs" class="[--card-spacing:--spacing(3)]"&gt;...&lt;/div&gt;
+&lt;div x-data="card()" x-bind="cardAttrs"&gt;<span class="text-muted-foreground">&lt;!-- default --spacing(6) --&gt;</span>...&lt;/div&gt;
+&lt;div x-data="card()" x-bind="cardAttrs" class="[--card-spacing:--spacing(10)]"&gt;...&lt;/div&gt;</code></pre>
           </div>
         </div>
       </div>
