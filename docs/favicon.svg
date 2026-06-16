@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="78 93 53 53">
+  <rect x="78.51" y="93.12" width="52.04" height="52.04" fill="#000" rx="4" />
+  <path fill="#82dbdb" d="m 122.66,96.81 -21.51,17.72 -18.91,16.12 0.22,-16.89 0.02,-16.81 20.92,-0.12 z" />
+  <rect x="81.47" y="132.36" width="46.25" height="10.95" fill="#82dbdb" rx="2" />
+  <text x="104.53" y="121.46" text-anchor="middle" font-size="9.34" font-family="sans-serif" font-weight="bold" fill="#fff">alp-ui</text>
+</svg>
