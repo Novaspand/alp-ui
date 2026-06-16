@@ -102,11 +102,29 @@
       <p class="mt-2 text-base text-muted-foreground sm:text-balance md:max-w-[80%]">A multi-line text input for longer content.</p>
     </div>
 
-    <div data-slot="component-preview" class="group relative mt-8 mb-12 flex flex-col overflow-hidden rounded-xl border">
-      <div class="flex min-h-32 items-center justify-center p-10">
-        <div class="flex flex-col gap-4 w-80">
-          <textarea placeholder="Type your message here." class="flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"></textarea>
-          <textarea placeholder="Disabled textarea" disabled class="flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"></textarea>
+    <div x-data="{ showCode: false }" class="mb-12">
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <textarea x-data="textarea()" x-bind="textareaAttrs" placeholder="Type your message here."></textarea>
+            <textarea x-data="textarea({ state: 'disabled' })" x-bind="textareaAttrs" placeholder="Disabled textarea"></textarea>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;textarea x-data="textarea()" x-bind="textareaAttrs" placeholder="Type your message here."&gt;&lt;/textarea&gt;
+&lt;textarea x-data="textarea({ state: 'disabled' })" x-bind="textareaAttrs" placeholder="Disabled textarea"&gt;&lt;/textarea&gt;</code></pre>
+          </div>
         </div>
       </div>
     </div>
@@ -117,10 +135,185 @@
         <span x-show="!copied">Copy</span>
         <span x-show="copied" x-cloak>Copied!</span>
       </button>
-      <pre class="overflow-x-auto rounded-lg border border-border bg-muted p-4 pb-8 text-sm"><code>&lt;textarea placeholder="Type your message here." x-data="textarea()" x-bind="textareaAttrs"&gt;&lt;/textarea&gt;
+      <pre class="overflow-x-auto rounded-lg border border-border bg-muted p-4 pb-8 text-sm"><code><span class="text-muted-foreground">&lt;!-- Basic textarea --&gt;</span>
+&lt;textarea x-data="textarea()" x-bind="textareaAttrs" placeholder="Message"&gt;&lt;/textarea&gt;
+
+<span class="text-muted-foreground">&lt;!-- With label and description --&gt;</span>
+&lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Message&lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;textarea x-data="textarea()" x-bind="textareaAttrs" placeholder="Enter your message"&gt;&lt;/textarea&gt;
+    &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs"&gt;Enter your message below.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 
 <span class="text-muted-foreground">&lt;!-- Disabled --&gt;</span>
-&lt;textarea placeholder="Disabled" x-data="textarea({ state: 'disabled' })" x-bind="textareaAttrs"&gt;&lt;/textarea&gt;</code></pre>
+&lt;div x-data="field({ disabled: true })" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Message&lt;/label&gt;
+  &lt;textarea x-data="textarea({ state: 'disabled' })" x-bind="textareaAttrs" placeholder="Disabled"&gt;&lt;/textarea&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+
+    <h2 class="mb-4 mt-10 scroll-m-24 text-lg font-semibold tracking-tight">Examples</h2>
+
+    <!-- Field -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Field</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">field()</code>, <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">fieldContent()</code>, and <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">fieldDescription()</code> to build a textarea with a label and description.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <div x-data="field()" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Message</label>
+              <div x-data="fieldContent()" x-bind="fieldContentAttrs">
+                <textarea x-data="textarea()" x-bind="textareaAttrs" placeholder="Enter your message below."></textarea>
+                <p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs">Enter your message below.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Message&lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;textarea x-data="textarea()" x-bind="textareaAttrs" placeholder="Enter your message"&gt;&lt;/textarea&gt;
+    &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs"&gt;Enter your message below.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disabled -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Disabled</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">disabled: true</code> on the field and <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">state: 'disabled'</code> on the textarea.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <div x-data="field({ disabled: true })" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Message</label>
+              <textarea x-data="textarea({ state: 'disabled' })" x-bind="textareaAttrs" placeholder="This field is disabled"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="field({ disabled: true })" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Message&lt;/label&gt;
+  &lt;textarea x-data="textarea({ state: 'disabled' })" x-bind="textareaAttrs" placeholder="This field is disabled"&gt;&lt;/textarea&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invalid -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Invalid</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">invalid: true</code> on the field and <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">aria-invalid="true"</code> on the textarea.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <div x-data="field({ invalid: true })" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Message</label>
+              <div x-data="fieldContent()" x-bind="fieldContentAttrs">
+                <textarea x-data="textarea()" x-bind="textareaAttrs" placeholder="Enter your message" aria-invalid="true"></textarea>
+                <p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs" class="text-destructive">Please enter a valid message.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="field({ invalid: true })" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Message&lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;textarea x-data="textarea()" x-bind="textareaAttrs" placeholder="Enter your message" aria-invalid="true"&gt;&lt;/textarea&gt;
+    &lt;p x-data="fieldDescription()" x-bind="fieldDescriptionAttrs" class="text-destructive"&gt;Please enter a valid message.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Button</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Pair a textarea with a <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">button</code> to create a message form.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex w-80 flex-col gap-4">
+            <div x-data="field()" x-bind="fieldAttrs">
+              <label x-data="label()" x-bind="labelAttrs">Message</label>
+              <div x-data="fieldContent()" x-bind="fieldContentAttrs">
+                <textarea x-data="textarea()" x-bind="textareaAttrs" placeholder="Type your message here."></textarea>
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <button x-data="button({ variant: 'default' })" x-bind="buttonAttrs">
+                Send message
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="field()" x-bind="fieldAttrs"&gt;
+  &lt;label x-data="label()" x-bind="labelAttrs"&gt;Message&lt;/label&gt;
+  &lt;div x-data="fieldContent()" x-bind="fieldContentAttrs"&gt;
+    &lt;textarea x-data="textarea()" x-bind="textareaAttrs" placeholder="Type your message here."&gt;&lt;/textarea&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="flex justify-end"&gt;
+  &lt;button x-data="button({ variant: 'default' })" x-bind="buttonAttrs"&gt;Send message&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
