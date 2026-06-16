@@ -4,10 +4,12 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('button', (opts = {}) => ({
     variant: opts.variant || 'default',
     size: opts.size || 'default',
+    rounded: opts.rounded || false,
     extraClass: opts.class || '',
 
     get buttonAttrs() {
-      const base = 'inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 active:scale-95'
+      const radius = this.rounded ? 'rounded-full' : 'rounded-md'
+      const base = `inline-flex shrink-0 items-center justify-center gap-2 text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 active:scale-95 ${radius}`
 
       const variants = {
         default: 'bg-primary text-primary-foreground hover:bg-primary/90',
@@ -19,10 +21,10 @@ document.addEventListener('alpine:init', () => {
       }
 
       const sizes = {
-        xs: 'h-7 rounded-md px-2 text-xs',
-        sm: 'h-8 rounded-md px-3 text-xs',
-        default: 'h-9 px-4 py-2',
-        lg: 'h-10 rounded-md px-6 text-base',
+        xs: `h-7 ${radius} px-2 text-xs`,
+        sm: `h-8 ${radius} px-3 text-xs`,
+        default: `h-9 ${radius} px-4 py-2`,
+        lg: `h-10 ${radius} px-6 text-base`,
         icon: 'size-9',
         'icon-sm': 'size-8',
         'icon-lg': 'size-10',

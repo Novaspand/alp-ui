@@ -479,8 +479,8 @@
       <div class="group relative flex flex-col overflow-hidden rounded-xl border">
         <div class="flex min-h-32 items-center justify-center p-10">
           <div class="flex flex-wrap items-center gap-4">
-            <button disabled class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2">Primary</button>
-            <button disabled class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Outline</button>
+            <button x-data="button()" x-bind="buttonAttrs" disabled>Primary</button>
+            <button x-data="button({ variant: 'outline' })" x-bind="buttonAttrs" disabled>Outline</button>
           </div>
         </div>
         <div class="flex items-center border-t border-border px-4 py-2">
@@ -497,6 +497,45 @@
             </button>
             <pre class="overflow-x-auto text-xs"><code><span class="text-muted-foreground">&lt;!-- Add the disabled attribute --&gt;</span>
 &lt;button x-data="button()" x-bind="buttonAttrs" disabled&gt;Primary&lt;/button&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rounded -->
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Rounded</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">rounded: true</code> for pill-shaped buttons.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div class="flex flex-wrap items-center gap-4">
+            <button x-data="button({ variant: 'default', rounded: true })" x-bind="buttonAttrs">Rounded</button>
+            <button x-data="button({ variant: 'secondary', rounded: true })" x-bind="buttonAttrs">Secondary</button>
+            <button x-data="button({ variant: 'outline', rounded: true })" x-bind="buttonAttrs">Outline</button>
+            <button x-data="button({ variant: 'destructive', rounded: true })" x-bind="buttonAttrs">Delete</button>
+            <button x-data="button({ size: 'icon', variant: 'outline', rounded: true })" x-bind="buttonAttrs">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code><span class="text-muted-foreground">&lt;!-- Add rounded: true for pill shape --&gt;</span>
+&lt;button x-data="button({ rounded: true })" x-bind="buttonAttrs"&gt;Rounded&lt;/button&gt;
+&lt;button x-data="button({ variant: 'outline', rounded: true })" x-bind="buttonAttrs"&gt;Outline&lt;/button&gt;
+&lt;button x-data="button({ size: 'icon', variant: 'outline', rounded: true })" x-bind="buttonAttrs"&gt;
+  &lt;svg ...&gt;&lt;/svg&gt;
+&lt;/button&gt;</code></pre>
           </div>
         </div>
       </div>
@@ -522,6 +561,11 @@
             <td class="px-4 py-3 font-mono text-xs">size</td>
             <td class="px-4 py-3 text-xs text-muted-foreground">"xs" | "sm" | "default" | "lg" | "icon" | "icon-sm" | "icon-lg"</td>
             <td class="px-4 py-3 text-xs text-muted-foreground">"default"</td>
+          </tr>
+          <tr class="border-b border-border">
+            <td class="px-4 py-3 font-mono text-xs">rounded</td>
+            <td class="px-4 py-3 text-xs text-muted-foreground">boolean</td>
+            <td class="px-4 py-3 text-xs text-muted-foreground">false</td>
           </tr>
         </tbody>
       </table>
