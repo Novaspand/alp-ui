@@ -102,18 +102,157 @@
       <p class="mt-2 text-base text-muted-foreground sm:text-balance md:max-w-[80%]">A container with padding, border, and shadow for grouping content.</p>
     </div>
 
-    <div data-slot="component-preview" class="group relative mt-8 mb-12 flex flex-col overflow-hidden rounded-xl border">
-      <div class="flex min-h-32 items-center justify-center p-10">
-        <div class="rounded-xl border border-border bg-card text-card-foreground shadow-sm w-80">
-          <div class="flex flex-col space-y-1.5 p-6">
-            <h3 class="text-lg font-semibold leading-none tracking-tight">Card Title</h3>
-            <p class="text-sm text-muted-foreground">Card description goes here.</p>
+    <div x-data="{ showCode: false }" class="mb-12">
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div x-data="card()" x-bind="cardAttrs" class="w-80">
+            <div x-data="cardHeader()" x-bind="cardHeaderAttrs">
+              <div x-data="cardTitle()" x-bind="cardTitleAttrs" class="text-lg">Login to your account</div>
+              <div x-data="cardDescription()" x-bind="cardDescriptionAttrs">Enter your email below to login to your account.</div>
+              <div x-data="cardAction()" x-bind="cardActionAttrs">
+                <button x-data="button({ size: 'sm', variant: 'outline' })" x-bind="buttonAttrs">Sign Up</button>
+              </div>
+            </div>
+            <div x-data="cardContent()" x-bind="cardContentAttrs" class="space-y-4">
+              <div class="space-y-2">
+                <label x-data="label()" x-bind="labelAttrs">Email</label>
+                <input x-data="input()" x-bind="inputAttrs" type="email" placeholder="m@example.com" />
+              </div>
+              <div class="space-y-2">
+                <label x-data="label()" x-bind="labelAttrs">Password</label>
+                <input x-data="input()" x-bind="inputAttrs" type="password" />
+                <a href="#" class="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground">Forgot your password?</a>
+              </div>
+            </div>
+            <div x-data="cardFooter()" x-bind="cardFooterAttrs" class="flex-col gap-2">
+              <button x-data="button()" x-bind="buttonAttrs" class="w-full">Login</button>
+              <button x-data="button({ variant: 'outline' })" x-bind="buttonAttrs" class="w-full">Login with Google</button>
+            </div>
           </div>
-          <div class="p-6 pt-0">
-            <p class="text-sm text-muted-foreground">Card content goes here. This is the main body area of the card component.</p>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="card()" x-bind="cardAttrs"&gt;
+  &lt;div x-data="cardHeader()" x-bind="cardHeaderAttrs"&gt;
+    &lt;div x-data="cardTitle()" x-bind="cardTitleAttrs"&gt;Login to your account&lt;/div&gt;
+    &lt;div x-data="cardDescription()" x-bind="cardDescriptionAttrs"&gt;Enter your email below.&lt;/div&gt;
+    &lt;div x-data="cardAction()" x-bind="cardActionAttrs"&gt;
+      &lt;button x-data="button({ size: 'sm', variant: 'outline' })" x-bind="buttonAttrs"&gt;Sign Up&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div x-data="cardContent()" x-bind="cardContentAttrs"&gt;
+    ...form fields...
+  &lt;/div&gt;
+  &lt;div x-data="cardFooter()" x-bind="cardFooterAttrs"&gt;
+    &lt;button x-data="button()" x-bind="buttonAttrs"&gt;Login&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
           </div>
-          <div class="flex items-center p-6 pt-0">
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2">Action</button>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="mb-4 mt-10 scroll-m-24 text-lg font-semibold tracking-tight">Examples</h2>
+
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Size</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Use <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">data-size="sm"</code> for a smaller, more compact card. Note: the `size` prop on the Alpine card component is coming soon — for now add the attribute directly.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div x-data="card()" x-bind="cardAttrs" data-size="sm" class="w-72 [--card-spacing:--spacing(3)]">
+            <div x-data="cardHeader()" x-bind="cardHeaderAttrs">
+              <div x-data="cardTitle()" x-bind="cardTitleAttrs">Small Card</div>
+              <div x-data="cardDescription()" x-bind="cardDescriptionAttrs">This card uses the small size variant.</div>
+            </div>
+            <div x-data="cardContent()" x-bind="cardContentAttrs">
+              <p class="text-sm text-muted-foreground">The card component supports a <code class="rounded-md bg-muted px-1.5 py-0.5 text-xs font-mono">data-size="sm"</code> attribute for a more compact appearance.</p>
+            </div>
+            <div x-data="cardFooter()" x-bind="cardFooterAttrs">
+              <button x-data="button({ size: 'sm' })" x-bind="buttonAttrs">Action</button>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="card()" x-bind="cardAttrs" data-size="sm" class="[--card-spacing:--spacing(3)]"&gt;
+  &lt;div x-data="cardHeader()" x-bind="cardHeaderAttrs"&gt;
+    &lt;div x-data="cardTitle()" x-bind="cardTitleAttrs"&gt;Small Card&lt;/div&gt;
+    &lt;div x-data="cardDescription()" x-bind="cardDescriptionAttrs"&gt;This card uses the small size variant.&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div x-data="cardContent()" x-bind="cardContentAttrs"&gt;
+    &lt;p class="text-sm text-muted-foreground"&gt;Content here.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div x-data="cardFooter()" x-bind="cardFooterAttrs"&gt;
+    &lt;button x-data="button({ size: 'sm' })" x-bind="buttonAttrs"&gt;Action&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div x-data="{ showCode: false }" class="mb-8">
+      <h3 class="mb-4 scroll-m-20 text-[0.9375rem] font-medium tracking-tight">Image</h3>
+      <p class="mb-4 text-sm text-muted-foreground">Add an image before the card header to create a card with an image.</p>
+      <div class="group relative flex flex-col overflow-hidden rounded-xl border">
+        <div class="flex min-h-32 items-center justify-center p-10">
+          <div x-data="card()" x-bind="cardAttrs" class="w-80">
+            <img src="https://avatar.vercel.sh/shadcn1" alt="Event cover" class="w-full rounded-t-xl object-cover" />
+            <div x-data="cardHeader()" x-bind="cardHeaderAttrs">
+              <div class="flex items-center gap-2">
+                <span x-data="badge({ variant: 'outline' })" x-bind="badgeAttrs">Featured</span>
+              </div>
+              <div x-data="cardTitle()" x-bind="cardTitleAttrs" class="text-lg">Design systems meetup</div>
+              <div x-data="cardDescription()" x-bind="cardDescriptionAttrs">A practical talk on component APIs, accessibility, and shipping faster.</div>
+            </div>
+            <div x-data="cardFooter()" x-bind="cardFooterAttrs">
+              <button x-data="button({ variant: 'outline' })" x-bind="buttonAttrs">View Event</button>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center border-t border-border px-4 py-2">
+          <button @click="showCode = !showCode" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground">
+            <svg x-show="!showCode" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" x2="14" y1="3" y2="10"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+            <span x-text="showCode ? 'Hide Code' : 'View Code'"></span>
+          </button>
+        </div>
+        <div x-show="showCode" class="border-t border-border bg-muted p-4 pb-6" style="display: none;">
+          <div class="relative group">
+            <button x-data="{ copied: false }" @click="const t = $el.parentElement.querySelector('code')?.textContent?.trim(); if (t) { navigator.clipboard.writeText(t); copied = true; setTimeout(() => copied = false, 1500); }" class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded-md border border-border bg-background px-2 py-1 text-xs text-muted-foreground shadow-xs hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity">
+              <span x-show="!copied">Copy</span>
+              <span x-show="copied" x-cloak>Copied!</span>
+            </button>
+            <pre class="overflow-x-auto text-xs"><code>&lt;div x-data="card()" x-bind="cardAttrs"&gt;
+  &lt;img src="..." alt="Event cover" class="w-full rounded-t-xl object-cover" /&gt;
+  &lt;div x-data="cardHeader()" x-bind="cardHeaderAttrs"&gt;
+    &lt;span x-data="badge({ variant: 'outline' })" x-bind="badgeAttrs"&gt;Featured&lt;/span&gt;
+    &lt;div x-data="cardTitle()" x-bind="cardTitleAttrs"&gt;Title&lt;/div&gt;
+    &lt;div x-data="cardDescription()" x-bind="cardDescriptionAttrs"&gt;Description&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div x-data="cardFooter()" x-bind="cardFooterAttrs"&gt;
+    &lt;button x-data="button({ variant: 'outline' })" x-bind="buttonAttrs"&gt;Action&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
           </div>
         </div>
       </div>
@@ -125,24 +264,23 @@
         <span x-show="!copied">Copy</span>
         <span x-show="copied" x-cloak>Copied!</span>
       </button>
-      <pre class="overflow-x-auto rounded-lg border border-border bg-muted p-4 pb-8 text-sm"><code><span class="text-muted-foreground">&lt;!-- Card wrapper --&gt;</span>
+      <pre class="overflow-x-auto rounded-lg border border-border bg-muted p-4 pb-8 text-sm"><code><span class="text-muted-foreground">&lt;!-- Card with title, description, action, content, and footer --&gt;</span>
 &lt;div x-data="card()" x-bind="cardAttrs"&gt;
   &lt;div x-data="cardHeader()" x-bind="cardHeaderAttrs"&gt;
-    &lt;h3 class="text-lg font-semibold leading-none tracking-tight"&gt;Title&lt;/h3&gt;
-    &lt;p class="text-sm text-muted-foreground"&gt;Description&lt;/p&gt;
+    &lt;div x-data="cardTitle()" x-bind="cardTitleAttrs"&gt;Card Title&lt;/div&gt;
+    &lt;div x-data="cardDescription()" x-bind="cardDescriptionAttrs"&gt;Card description&lt;/div&gt;
+    &lt;div x-data="cardAction()" x-bind="cardActionAttrs"&gt;
+      &lt;button x-data="button({ size: 'sm', variant: 'outline' })" x-bind="buttonAttrs"&gt;Action&lt;/button&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
   &lt;div x-data="cardContent()" x-bind="cardContentAttrs"&gt;
     &lt;p class="text-sm text-muted-foreground"&gt;Content&lt;/p&gt;
   &lt;/div&gt;
   &lt;div x-data="cardFooter()" x-bind="cardFooterAttrs"&gt;
-    &lt;button x-data="button()" x-bind="buttonAttrs"&gt;Action&lt;/button&gt;
+    &lt;button x-data="button()" x-bind="buttonAttrs"&gt;Save&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
     </div>
-  &lt;div class="flex items-center p-6 pt-0"&gt;
-    &lt;button class="..."&gt;Action&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</code></pre>
 
   </div>
 </div>

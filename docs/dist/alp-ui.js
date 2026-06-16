@@ -64,7 +64,7 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('card', () => ({
     get cardAttrs() {
       return {
-        class: 'rounded-xl border border-border bg-card text-card-foreground shadow-sm',
+        class: 'flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm',
       }
     },
   }))
@@ -72,7 +72,31 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('cardHeader', () => ({
     get cardHeaderAttrs() {
       return {
-        class: 'flex flex-col space-y-1.5 p-6',
+        class: '@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6',
+      }
+    },
+  }))
+
+  Alpine.data('cardTitle', () => ({
+    get cardTitleAttrs() {
+      return {
+        class: 'leading-none font-semibold',
+      }
+    },
+  }))
+
+  Alpine.data('cardDescription', () => ({
+    get cardDescriptionAttrs() {
+      return {
+        class: 'text-sm text-muted-foreground',
+      }
+    },
+  }))
+
+  Alpine.data('cardAction', () => ({
+    get cardActionAttrs() {
+      return {
+        class: 'col-start-2 row-span-2 row-start-1 self-start justify-self-end',
       }
     },
   }))
@@ -80,7 +104,7 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('cardContent', () => ({
     get cardContentAttrs() {
       return {
-        class: 'p-6 pt-0',
+        class: 'px-6',
       }
     },
   }))
@@ -88,7 +112,7 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('cardFooter', () => ({
     get cardFooterAttrs() {
       return {
-        class: 'flex items-center p-6 pt-0',
+        class: 'flex items-center px-6 [.border-t]:pt-6',
       }
     },
   }))
