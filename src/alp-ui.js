@@ -7,7 +7,7 @@ document.addEventListener('alpine:init', () => {
     extraClass: opts.class || '',
 
     get buttonAttrs() {
-      const base = 'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50'
+      const base = 'inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 active:scale-95'
 
       const variants = {
         default: 'bg-primary text-primary-foreground hover:bg-primary/90',
