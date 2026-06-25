@@ -1,6 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="78 93 53 53">
-  <rect x="78.51" y="93.12" width="52.04" height="52.04" fill="#000" rx="4" />
-  <path fill="#82dbdb" d="m 122.66,96.81 -21.51,17.72 -18.91,16.12 0.22,-16.89 0.02,-16.81 20.92,-0.12 z" />
-  <rect x="81.47" y="132.36" width="46.25" height="10.95" fill="#82dbdb" rx="2" />
-  <text x="104.53" y="121.46" text-anchor="middle" font-size="9.34" font-family="sans-serif" font-weight="bold" fill="#fff">alp-ui</text>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="87.63932mm"
+   height="88.24794mm"
+   viewBox="0 0 87.63932 88.24794"
+   version="1.1"
+   id="svg1"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <g
+     id="layer1"
+     transform="translate(-55.383198,-57.209011)">
+    <rect
+       style="fill:#000000;stroke-width:2.94209"
+       id="rect4"
+       width="87.639328"
+       height="88.247948"
+       x="55.383198"
+       y="57.209007"
+       ry="9.1290979" />
+    <path
+       id="rect2"
+       style="fill:#82dbdb;stroke-width:1.93673"
+       d="M 65.015844,66.231767 H 132.15105 L 65.015844,134.58425 Z" />
+    <path
+       id="rect2-3"
+       style="fill:#82dbdb;stroke-width:1.29329"
+       d="M 133.66301,116.69373 89.542006,116.16268 133.66301,70.859701 Z" />
+    <path
+       id="rect3"
+       style="fill:#82dbdb;stroke-width:1.80618"
+       d="m 86.458179,119.62265 47.226451,-0.30277 v 16.95445 l -62.61348,-1.21104 z" />
+  </g>
 </svg>
